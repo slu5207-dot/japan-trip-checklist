@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { db } from '../firebase'; // 注意這裡的路徑，原本是 @/firebase 可能會報錯，改成 ../firebase 比較保險
-import { doc, setDoc, onSnapshot } from 'firebase/firestore';
-import { Check, Plane, Snowflake, CreditCard, AlertCircle } from 'lucide-react';
+import { db } from '@/firebase'; // 確保路徑正確
+import { doc, setDoc, getDoc, onSnapshot } from 'firebase/firestore';
+import { Check, Plane, Snowflake, CreditCard, AlertCircle, User, ShoppingBag } from 'lucide-react';
 
 // --- 資料設定 ---
 const USERS = ['筱琪蛇', '錢人豪', '佳瑜', '庭妤', '宇漢蛇'];
@@ -17,6 +17,16 @@ const TRIP_INFO = {
   ],
   coach: "57000元 (未結)"
 };
+
+// 新增：雪具租借清單
+const RENTAL_LIST = [
+  { name: "套裝1 (板+鞋+衣+褲)", count: "4組" },
+  { name: "套裝2 (板+鞋)", count: "1組" },
+  { name: "安全帽", count: "5頂" },
+  { name: "雪鏡", count: "1個" },
+  { name: "防摔褲", count: "4件" },
+  { name: "護膝", count: "1個" },
+];
 
 const CATEGORIES = [
   {
@@ -36,10 +46,14 @@ const CATEGORIES = [
   },
   {
     id: 'optional',
-    title: '可帶可不帶 (🔵)',
+    title: '分配/選用 (🔵)',
     icon: <Check className="w-5 h-5 text-blue-500" />,
     items: [
-      '牙刷 (飯店有)', '牙膏 (飯店有)', '洗面乳', '護髮乳',
+      '牙膏 (宇漢負責)', 
+      '洗面乳 (佳瑜負責)', 
+      '護髮油 (筱琪負責)', 
+      '乳液 (庭妤負責)',
+      '牙刷 (飯店有)', 
       '耳機', '筆電 (需轉接頭)', '雨傘', '衣架x2',
       '口罩', '拖鞋', '手機防水袋', '雪鏡 (戴眼鏡建議自備)', '暖暖包'
     ]
@@ -50,7 +64,7 @@ const CATEGORIES = [
     icon: <Snowflake className="w-5 h-5 text-cyan-500" />,
     items: [
       '滑雪保險 (富邦14天作業)',
-      '雪具租借',
+      '雪具租借 (詳見上方清單)',
       '滑雪纜車票',
       'esim'
     ]
@@ -179,6 +193,22 @@ export default function Home() {
             <li className="flex justify-between text-red-500 font-medium"><span>新宿住宿</span> <span>$24,399 (未結)</span></li>
             <li className="flex justify-between text-orange-500"><span>湯澤住宿</span> <span>$46,522 (待扣款)</span></li>
           </ul>
+        </div>
+
+        {/* 新增：雪具租借清單 */}
+        <div className="bg-white p-5 rounded-xl shadow-md border-l-4 border-cyan-500">
+           <h3 className="font-bold text-gray-800 flex items-center gap-2 mb-3">
+            <ShoppingBag className="w-5 h-5 text-cyan-500" /> 雪具租借清單 (共用)
+          </h3>
+          <div className="grid grid-cols-2 gap-2 text-sm">
+            {RENTAL_LIST.map((item, idx) => (
+              <div key={idx} className="flex justify-between bg-cyan-50 p-2 rounded">
+                <span className="text-gray-700">{item.name}</span>
+                <span className="font-bold text-cyan-700">{item.count}</span>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-gray-400 mt-2 text-right">*請確認有無遺漏</p>
         </div>
 
         {/* 檢查清單 */}
