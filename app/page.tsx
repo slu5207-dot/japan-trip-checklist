@@ -22,7 +22,7 @@ const RENTAL_LIST = [
   { name: "安全帽", count: "5頂" },
   { name: "雪鏡", count: "1個" },
   { name: "防摔褲", count: "4件" },
-  { name: "護膝", count: "1個" },
+  // 已移除護膝
 ];
 
 const CATEGORIES = [
@@ -64,7 +64,7 @@ const CATEGORIES = [
       '滑雪保險 (富邦14天作業)',
       '雪具租借 (詳見上方清單)',
       '滑雪纜車票',
-      'esim'
+      'esim (已購買，詳見費用)'
     ]
   }
 ];
@@ -402,6 +402,14 @@ export default function Home() {
                 <li className="flex justify-between items-center p-2 hover:bg-slate-50 rounded-lg transition-colors">
                   <span className="text-slate-500 font-medium">機票</span> 
                   <span className="bg-slate-100 text-slate-500 px-2 py-1 rounded text-xs font-bold">已結清</span>
+                </li>
+                <li className="flex justify-between items-center p-2 hover:bg-slate-50 rounded-lg transition-colors">
+                  <span className="text-slate-700 font-bold">eSIM</span> 
+                  <span className="font-black text-blue-600 bg-blue-50 px-2 py-1 rounded">$3,723 (錢先付)</span>
+                </li>
+                <li className="flex justify-between items-center p-2 hover:bg-slate-50 rounded-lg transition-colors">
+                  <span className="text-slate-700 font-bold">交通票 (機場/三日卷)</span> 
+                  <span className="font-black text-blue-600 bg-blue-50 px-2 py-1 rounded">$7,060 (錢先付)</span>
                 </li>
                 <li className="flex justify-between items-center p-2 hover:bg-slate-50 rounded-lg transition-colors">
                   <span className="text-slate-700 font-bold">滑雪教練</span> 
